@@ -1,0 +1,399 @@
+/* Ümumi stillər */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar stilləri */
+.navbar {
+    background: linear-gradient(135deg, #ff6b35, #4ecdc4);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.logo h2 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #ffeb3b;
+}
+
+/* Ana səhifə bölməsi */
+.hero {
+    background: linear-gradient(135deg, #ff6b35, #4ecdc4, #45b7d1);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    margin-top: 80px;
+}
+
+.hero-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    background: #ff6b35;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.by{
+    align-items: center;
+    justify-content: center;
+    text-align: centert;
+    color: red;
+    
+}
+
+.cta-button:hover {
+    background: #e55a2b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+/* Haqqımızda bölməsi */
+.about {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
+.about h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #ff6b35;
+}
+
+.about p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feature {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #4ecdc4;
+}
+
+/* Məhsullar bölməsi */
+.products {
+    padding: 80px 0;
+    background: white;
+}
+
+.products h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #ff6b35;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-color {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-logo {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 4px solid white !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    z-index: 10 !important;
+    position: relative !important;
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Portfolio bölməsi */
+.portfolio {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
+.portfolio h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ff6b35;
+}
+
+.portfolio p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: #666;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.portfolio-item {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Əlaqə bölməsi */
+.contact {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #ff6b35, #4ecdc4);
+    color: white;
+}
+
+.contact h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.contact p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+}
+
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.contact-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.contact-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+    background: #25d366;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn:hover {
+    background: #128c7e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Footer */
+.footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* Responsive dizayn */
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .logo-img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .hero-logo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+}
