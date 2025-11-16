@@ -1,37 +1,102 @@
-/* Ümumi stillər */
+/* ============================================
+   MAMA MAKO - Portfolio Website
+   CSS Styles - Mobil First Approach
+   ============================================ */
+
+/* ============================================
+   CSS VARIABLES - Rəng palitrası və dəyərlər
+   ============================================ */
+   :root {
+    /* Ana rənglər - Logo rənglərinə uyğun */
+    --primary-color: #ff6b35;      /* Narıncı */
+    --secondary-color: #4ecdc4;    /* Mavi-yaşıl */
+    --accent-color: #2d8659;       /* Yaşıl */
+    --dark-color: #2c3e50;
+    --light-color: #f8f9fa;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-light: #666666;
+    
+    /* Gradient rənglər */
+    --gradient-primary: linear-gradient(135deg, #ff6b35, #4ecdc4);
+    --gradient-hero: linear-gradient(135deg, #ff6b35, #4ecdc4, #45b7d1);
+    
+    /* Ölçülər */
+    --container-max-width: 1200px;
+    --border-radius: 15px;
+    --border-radius-small: 10px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.2);
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ============================================
+   RESET & BASE STYLES - Əsas stillər
+   ============================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-dark);
+    background-color: var(--white);
+    overflow-x: hidden;
 }
 
+/* ============================================
+   CONTAINER - Mərkəzləşdirilmiş konteyner
+   ============================================ */
 .container {
-    max-width: 1200px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--spacing-sm);
 }
 
-/* Navbar stilləri */
+/* ============================================
+   NAVBAR - Üst menyu
+   ============================================ */
 .navbar {
-    background: linear-gradient(135deg, #ff6b35, #4ecdc4);
-    padding: 1rem 0;
     position: fixed;
-    width: 100%;
     top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--gradient-primary);
+    padding: var(--spacing-sm) 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.navbar.scrolled {
+    background: rgba(255, 107, 53, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md);
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--spacing-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,7 +105,7 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--spacing-xs);
 }
 
 .logo-img {
@@ -48,42 +113,129 @@ body {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid white;
+    border: 2px solid var(--white);
 }
 
-.logo h2 {
-    color: white;
-    font-size: 1.8rem;
+.logo-text {
+    color: var(--white);
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
+/* Mobil menyu düyməsi */
+.mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 3px;
+    transition: all var(--transition-normal);
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Nav menyu */
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: var(--spacing-md);
+    align-items: center;
 }
 
-.nav-menu a {
-    color: white;
+.nav-link {
+    color: var(--white);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color var(--transition-fast);
+    padding: 5px 10px;
 }
 
-.nav-menu a:hover {
+.nav-link:hover {
     color: #ffeb3b;
 }
 
-/* Ana səhifə bölməsi */
+/* Mobil üçün menyu */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--gradient-primary);
+        flex-direction: column;
+        padding: var(--spacing-xl) var(--spacing-md);
+        gap: var(--spacing-md);
+        transition: right var(--transition-normal);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-link {
+        font-size: 1.2rem;
+        padding: var(--spacing-sm);
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+}
+
+/* ============================================
+   HERO SECTION - Ana giriş bölməsi
+   ============================================ */
 .hero {
-    background: linear-gradient(135deg, #ff6b35, #4ecdc4, #45b7d1);
-    height: 100vh;
+    min-height: 100vh;
+    background: var(--gradient-hero);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: white;
-    margin-top: 80px;
+    color: var(--white);
+    position: relative;
+    padding: var(--spacing-xl) var(--spacing-sm);
+    margin-top: 70px;
+}
+
+.hero-content {
+    max-width: 600px;
+    animation: fadeInUp 1s ease;
+}
+
+.hero-logo-wrapper {
+    margin-bottom: var(--spacing-md);
 }
 
 .hero-logo {
@@ -91,309 +243,692 @@ body {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid white;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    border: 4px solid var(--white);
+    box-shadow: var(--shadow-lg);
     animation: logoFloat 3s ease-in-out infinite;
 }
 
 @keyframes logoFloat {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-15px); }
 }
 
-.hero-content h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-xs);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-.hero-content p {
+.hero-subtitle {
     font-size: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 300;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.95;
 }
 
 .cta-button {
-    background: #ff6b35;
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--white);
+    color: var(--primary-color);
     padding: 15px 30px;
     border: none;
     border-radius: 50px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-}
-
-.by{
-    align-items: center;
-    justify-content: center;
-    text-align: centert;
-    color: red;
-    
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
 }
 
 .cta-button:hover {
-    background: #e55a2b;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
 }
 
-/* Haqqımızda bölməsi */
-.about {
-    padding: 80px 0;
-    background: #f8f9fa;
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.about h2 {
+.mouse {
+    width: 25px;
+    height: 40px;
+    border: 2px solid var(--white);
+    border-radius: 15px;
+    position: relative;
+}
+
+.mouse::before {
+    content: '';
+    width: 4px;
+    height: 8px;
+    background: var(--white);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: mouseScroll 1.5s infinite;
+}
+
+@keyframes mouseScroll {
+    0% { opacity: 1; top: 8px; }
+    100% { opacity: 0; top: 20px; }
+}
+
+/* Mobil üçün hero */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .hero-logo {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   SECTION STYLES - Ümumi bölmə stilləri
+   ============================================ */
+section {
+    padding: var(--spacing-xl) 0;
+}
+
+.section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #ff6b35;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-color);
 }
 
-.about p {
+.section-subtitle {
     text-align: center;
     font-size: 1.2rem;
-    margin-bottom: 3rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   ABOUT SECTION - Haqqımızda
+   ============================================ */
+.about {
+    background: var(--light-color);
+}
+
+.about-content {
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.feature {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
+.lead-text {
+    font-size: 1.3rem;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-dark);
 }
 
-.feature:hover {
-    transform: translateY(-5px);
+.ingredients-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
-.feature h3 {
+.ingredient-item {
+    background: var(--white);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-small);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.ingredient-item i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.guarantee-box {
+    background: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    margin-top: var(--spacing-md);
+}
+
+.guarantee-text {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.1rem;
+}
+
+.guarantee-text i {
+    color: var(--accent-color);
     font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #4ecdc4;
 }
 
-/* Məhsullar bölməsi */
+/* ============================================
+   PRODUCTS SECTION - Məhsullar
+   ============================================ */
 .products {
-    padding: 80px 0;
-    background: white;
+    background: var(--white);
 }
 
-.products h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: #ff6b35;
-}
-
-.product-grid {
+.products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
 }
 
 .product-card {
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.product-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease forwards;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
 }
 
-.product-color {
-    width: 100px;
-    height: 100px;
+.product-emoji {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.product-color-circle {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    margin: 0 auto 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin: 0 auto var(--spacing-sm);
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 4px solid;
     position: relative;
     overflow: hidden;
 }
 
-.product-logo {
-    width: 60px !important;
-    height: 60px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    border: 4px solid white !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-    z-index: 10 !important;
-    position: relative !important;
+.product-inner-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    opacity: 0.8;
 }
 
-.product-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #333;
+.product-name {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
 }
 
-/* Portfolio bölməsi */
-.portfolio {
-    padding: 80px 0;
-    background: #f8f9fa;
+.product-preview {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.95rem;
 }
 
-.portfolio h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #ff6b35;
-}
-
-.portfolio p {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 3rem;
-    color: #666;
-}
-
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.portfolio-item {
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.portfolio-item:hover {
-    transform: translateY(-5px);
-}
-
-.portfolio-item img {
+.product-btn {
+    background: var(--gradient-primary);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: all var(--transition-normal);
     width: 100%;
-    height: 200px;
+    justify-content: center;
+}
+
+.product-btn:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   MODAL - Məhsul detalları popup
+   ============================================ */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    padding: var(--spacing-sm);
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.8);
+    transition: transform var(--transition-normal);
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    background: rgba(0,0,0,0.2);
+    transform: rotate(90deg);
+}
+
+.modal-product-header {
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: var(--white);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.modal-emoji {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.modal-product-name {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.modal-product-content {
+    padding: var(--spacing-md);
+}
+
+.modal-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.tag {
+    background: var(--light-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    border: 1px solid #e0e0e0;
+}
+
+.modal-benefits-list {
+    list-style: none;
+    padding: 0;
+}
+
+.modal-benefits-list li {
+    padding: var(--spacing-xs) 0;
+    display: flex;
+    align-items: start;
+    gap: var(--spacing-xs);
+}
+
+.modal-benefits-list li i {
+    color: var(--accent-color);
+    margin-top: 5px;
+}
+
+/* ============================================
+   BENEFITS SECTION - Üstünlüklər
+   ============================================ */
+.benefits {
+    background: var(--light-color);
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.benefit-card {
+    background: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.benefit-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.benefit-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-sm);
+}
+
+.benefit-icon i {
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.benefit-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+}
+
+/* ============================================
+   USAGE SECTION - İstifadə qaydası
+   ============================================ */
+.usage {
+    background: var(--white);
+}
+
+.usage-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.step-card {
+    background: var(--light-color);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: start;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.step-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.step-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+}
+
+/* ============================================
+   CONTACT SECTION - Əlaqə
+   ============================================ */
+.contact {
+    background: var(--gradient-primary);
+    color: var(--white);
+}
+
+.contact .section-title,
+.contact .section-subtitle {
+    color: var(--white);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.contact-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    text-align: center;
+    text-decoration: none;
+    color: var(--white);
+    transition: all var(--transition-normal);
+    opacity: 0;
+    transform: translateY(30px);
+    border: 2px solid transparent;
+}
+
+.contact-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.contact-card:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-5px);
+    border-color: var(--white);
+}
+
+.contact-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-sm);
+}
+
+.contact-icon i {
+    font-size: 2rem;
+}
+
+.contact-card.whatsapp .contact-icon {
+    background: rgba(37, 211, 102, 0.3);
+}
+
+.contact-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+/* ============================================
+   FOOTER - Alt hissə
+   ============================================ */
+.footer {
+    background: var(--dark-color);
+    color: var(--white);
+    padding: var(--spacing-md) 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.footer-logo-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     object-fit: cover;
 }
 
-/* Əlaqə bölməsi */
-.contact {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #ff6b35, #4ecdc4);
-    color: white;
+.footer-text {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
 }
 
-.contact h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.contact p {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 3rem;
-}
-
-.contact-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.contact-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: 15px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-}
-
-.contact-item h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.whatsapp-btn {
-    display: inline-block;
-    background: #25d366;
-    color: white;
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 50px;
+.footer-by {
+    color: #ff6b35;
+    font-size: 0.9rem;
     font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
 }
 
-.whatsapp-btn:hover {
-    background: #128c7e;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-}
-
-/* Footer */
-.footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 2rem 0;
-}
-
-/* Responsive dizayn */
+/* ============================================
+   RESPONSIVE DESIGN - Mobil uyğunluq
+   ============================================ */
 @media (max-width: 768px) {
-    .nav-menu {
-        flex-direction: column;
-        gap: 1rem;
+    .section-title {
+        font-size: 2rem;
     }
     
-    .logo-img {
-        width: 30px;
-        height: 30px;
-    }
-    
-    .hero-logo {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-    
-    .hero-content p {
-        font-size: 1.2rem;
-    }
-    
-    .features {
+    .products-grid,
+    .benefits-grid,
+    .usage-steps,
+    .contact-grid {
         grid-template-columns: 1fr;
     }
     
-    .product-grid {
-        grid-template-columns: 1fr;
+    .ingredients-list {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .portfolio-grid {
-        grid-template-columns: 1fr;
+    .hero {
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-xs);
     }
     
-    .contact-info {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .ingredients-list {
         grid-template-columns: 1fr;
     }
 }

@@ -3,141 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAMA MAKO - Təbii Tərəvəz Makaronları</title>
+    <meta name="description" content="MAMA MAKO - Təbii tərəvəz əriştələri. Uşaqlar üçün sağlam və dadlı yemək.">
+    <title>MAMA MAKO - Təbii Tərəvəz Əriştələri</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome ikonlar üçün (əgər istəsən) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Ana menyu -->
-    <nav class="navbar">
+    <!-- ============================================
+         NAVBAR - Üst menyu
+         ============================================ -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
+            <!-- Logo və brend adı -->
             <div class="logo">
                 <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="logo-img">
-                <h2>MAMA MAKO</h2>
+                <span class="logo-text">MAMA MAKO</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home">Ana Səhifə</a></li>
-                <li><a href="#about">Haqqımızda</a></li>
-                <li><a href="#products">Məhsullar</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Əlaqə</a></li>
+            
+            <!-- Mobil menyu düyməsi -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menyunu aç/bağla">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Nav menyu linkləri -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Ana Səhifə</a></li>
+                <li><a href="#about" class="nav-link">Haqqımızda</a></li>
+                <li><a href="#products" class="nav-link">Məhsullar</a></li>
+                <li><a href="#benefits" class="nav-link">Üstünlüklər</a></li>
+                <li><a href="#usage" class="nav-link">İstifadə</a></li>
+                <li><a href="#contact" class="nav-link">Əlaqə</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Ana səhifə bölməsi -->
+    <!-- ============================================
+         HERO SECTION - Ana giriş bölməsi
+         ============================================ -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="hero-logo">
-            <h1>MAMA MAKO</h1>
-            <p>Təbii tərəvəz makaronları - Uşaqlarınız üçün ən yaxşısı!</p>
-            <button class="cta-button">Daha çox öyrən</button>
+            <div class="hero-logo-wrapper">
+                <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="hero-logo">
+            </div>
+            <h1 class="hero-title">MAMA MAKO</h1>
+            <p class="hero-subtitle">Təbii tərəvəz əriştələri</p>
+            <p class="hero-description">🌿 Təbiiətin dadını mətbəxinizə gətiririk</p>
+            <a href="#products" class="cta-button">
+                <span>Məhsulları kəşf et</span>
+                <i class="fas fa-arrow-down"></i>
+            </a>
+        </div>
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
         </div>
     </section>
 
-    <!-- Haqqımızda bölməsi -->
+    <!-- ============================================
+         ABOUT SECTION - Haqqımızda
+         ============================================ -->
     <section id="about" class="about">
         <div class="container">
-            <h2>MAMA MAKO nədir?</h2>
-            <p>MAMA MAKO - bu, tərəvəz yeməyən uşaqlar üçün xüsusi hazırlanmış təbii makaronlardır. Makaronlarımız tərəvəzlərin təbii püresindən hazırlanır və tərəvəzlərin təbii rənglərini daşıyır.</p>
-            <div class="features">
-                <div class="feature">
-                    <h3>🌱 Təbii</h3>
-                    <p>100% təbii tərəvəz püresi</p>
-                </div>
-                <div class="feature">
-                    <h3>👶 Uşaqlar üçün</h3>
-                    <p>Tərəvəz yeməyən uşaqlar üçün ideal</p>
-                </div>
-                <div class="feature">
-                    <h3>🎨 Rəngli</h3>
-                    <p>Tərəvəzlərin təbii rəngləri</p>
+            <h2 class="section-title">Haqqımızda</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead-text">
+                        MamaMako əriştələri sadəcə dörd təbii inqrediyentdən hazırlanır:
+                    </p>
+                    <div class="ingredients-list">
+                        <div class="ingredient-item">
+                            <i class="fas fa-seedling"></i>
+                            <span>Un</span>
+                        </div>
+                        <div class="ingredient-item">
+                            <i class="fas fa-egg"></i>
+                            <span>Yumurta</span>
+                        </div>
+                        <div class="ingredient-item">
+                            <i class="fas fa-cube"></i>
+                            <span>Duz</span>
+                        </div>
+                        <div class="ingredient-item">
+                            <i class="fas fa-carrot"></i>
+                            <span>Təzə tərəvəz püresi</span>
+                        </div>
+                    </div>
+                    <div class="guarantee-box">
+                        <p class="guarantee-text">
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Heç bir boya yoxdur</strong> — rəngini birbaşa tərəvəzdən alır
+                        </p>
+                        <p class="guarantee-text">
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Heç bir qatqı yoxdur</strong> — tam sağlam ev resepti
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Məhsullar bölməsi -->
+    <!-- ============================================
+         PRODUCTS SECTION - Məhsullar
+         ============================================ -->
     <section id="products" class="products">
         <div class="container">
-            <h2>Məhsullarımız</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-color">
-                        <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="product-logo">
-                    </div>
-                    <h3>Yerli Makaron</h3>
-                    <p>Yerli tərəvəzlərdən hazırlanmış</p>
-                </div>
-                <div class="product-card">
-                    <div class="product-color" style="background-color: #dc3545;">
-                        <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="product-logo">
-                    </div>
-                    <h3>Qırmızı Kələm Makaron</h3>
-                    <p>Qırmızı kələm və kök tərəvəzindən hazırlanmış</p>
-                </div>
-                <div class="product-card">
-                    <div class="product-color" style="background-color: #e74c3c;">
-                        <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="product-logo">
-                    </div>
-                    <h3>Qırmızı Bibər Makaron</h3>
-                    <p>Qırmızı bibər tərəvəzindən hazırlanmış</p>
-                </div>
+            <h2 class="section-title">Məhsullarımız</h2>
+            <p class="section-subtitle">9 müxtəlif təbii tərəvəz əriştəsi</p>
             
+            <!-- Məhsul kartları grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Məhsul kartları JavaScript ilə dinamik yüklənəcək -->
             </div>
         </div>
     </section>
 
-    <!-- Portfolio bölməsi -->
-    <section id="portfolio" class="portfolio">
+    <!-- ============================================
+         PRODUCT MODAL - Məhsul detalları popup
+         ============================================ -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Bağla">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Məhsul detalları buraya yüklənəcək -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         BENEFITS SECTION - Üstünlüklər
+         ============================================ -->
+    <section id="benefits" class="benefits">
         <div class="container">
-            <h2>Portfolio</h2>
-            <p>MAMA MAKO məhsullarımızın fotoşəkilləri</p>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/300x200/ff6b35/ffffff?text=MAMA+MAKO+1" alt="MAMA MAKO məhsulu">
+            <h2 class="section-title">Niyə MAMA MAKO?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>100% Təbii</h3>
+                    <p>Yalnız təbii inqrediyentlər, heç bir kimyəvi qatqı yoxdur</p>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/300x200/4ecdc4/ffffff?text=MAMA+MAKO+2" alt="MAMA MAKO məhsulu">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Təbii Rənglər</h3>
+                    <p>Rənglər birbaşa tərəvəzdən gəlir, heç bir boya yoxdur</p>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/300x200/45b7d1/ffffff?text=MAMA+MAKO+3" alt="MAMA MAKO məhsulu">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Sağlamlıq</h3>
+                    <p>Vitamin və minerallarla zəngin, uşaqlar üçün ideal</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Ev Dadı</h3>
+                    <p>Ev resepti ilə hazırlanır, təhlükəsiz və dadlı</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Əlaqə bölməsi -->
+    <!-- ============================================
+         USAGE SECTION - İstifadə qaydası
+         ============================================ -->
+    <section id="usage" class="usage">
+        <div class="container">
+            <h2 class="section-title">İstifadə Qaydası</h2>
+            <div class="usage-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Su qaynat</h3>
+                        <p>1 litr qaynar suya bir çimdik duz əlavə edin</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Əriştəni bişir</h3>
+                        <p>Əriştəni suya töküb 5–7 dəqiqə bişirin (qalınlığa görə dəyişə bilər)</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Süz və servis et</h3>
+                        <p>Bişdikdən sonra süzüb kərə yağı, sous və ya yemək suyu ilə servis edin</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Körpələr üçün</h3>
+                        <p>Daha yumşaq istəyirsinizsə, 1–2 dəqiqə artıq bişirin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CONTACT SECTION - Əlaqə
+         ============================================ -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2>Əlaqə</h2>
-            <p>MAMA MAKO haqqında suallarınız var? Bizimlə əlaqə saxlayın!</p>
-            <div class="contact-info">
-                <div class="contact-item">
+            <h2 class="section-title">Bizimlə Əlaqə</h2>
+            <p class="section-subtitle">Suallarınız var? Bizimlə əlaqə saxlayın!</p>
+            <div class="contact-grid">
+                <a href="https://wa.me/994707312109" class="contact-card whatsapp" target="_blank">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
                     <h3>WhatsApp</h3>
-                    <a href="https://wa.me/994506810614" class="whatsapp-btn" target="_blank">
-                        📱 WhatsApp ilə əlaqə
-                    </a>
-                </div>
-                <div class="contact-item">
+                    <p>+994 70 731 21 09</p>
+                </a>
+                <a href="tel:+994707312109" class="contact-card phone">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
                     <h3>Telefon</h3>
                     <p>+994 70 731 21 09</p>
-                </div>
-                <div class="contact-item">
+                </a>
+                <a href="mailto:info@mamamako.az" class="contact-card email">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
                     <h3>Email</h3>
                     <p>info@mamamako.az</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ============================================
+         FOOTER - Alt hissə
+         ============================================ -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 MAMA MAKO. Bütün hüquqlar qorunur.</p>
-            <p class="by">By: Murad Aliyev</p>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="WhatsApp Image 2025-10-24 at 15.59.11_22e4b00a.jpg" alt="MAMA MAKO Logo" class="footer-logo-img">
+                    <span>MAMA MAKO</span>
+                </div>
+                <p class="footer-text">&copy; 2025 MAMA MAKO. Bütün hüquqlar qorunur.</p>
+                <p class="footer-by">By: Murad Aliyev</p>
+            </div>
         </div>
     </footer>
 
+    <!-- JavaScript faylı -->
     <script src="script.js"></script>
 </body>
 </html>
