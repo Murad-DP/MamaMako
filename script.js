@@ -1,10 +1,10 @@
 // ============================================
-// MAMA MAKO - Portfolio Website
-// JavaScript Funksiyaları
+// MAMA MAKO - Premium Mobile-First Website
+// Enhanced JavaScript with Touch Gestures
 // ============================================
 
 // ============================================
-// MƏHSUL MƏLUMATLARI - Bütün əriştə növləri
+// MƏHSUL MƏLUMATLARI
 // ============================================
 const products = [
     {
@@ -13,6 +13,7 @@ const products = [
         emoji: "🟢",
         color: "#2d8659",
         bgColor: "#e8f5e9",
+        tone: "green",
         vitamins: ["A", "C", "K", "B6", "Folat"],
         minerals: ["Kalsium", "Kalium", "Dəmir", "Maqnezium"],
         benefits: [
@@ -28,6 +29,7 @@ const products = [
         emoji: "🟠",
         color: "#ff6b35",
         bgColor: "#fff3e0",
+        tone: "orange",
         vitamins: ["A", "C", "K", "B qrup"],
         minerals: ["Kalium", "Dəmir", "Kalsium"],
         benefits: [
@@ -43,6 +45,7 @@ const products = [
         emoji: "🟣",
         color: "#9c27b0",
         bgColor: "#f3e5f5",
+        tone: "purple",
         vitamins: ["A", "C", "B6", "Folat (B9)"],
         minerals: ["Dəmir", "Kalium", "Maqnezium"],
         benefits: [
@@ -58,6 +61,7 @@ const products = [
         emoji: "🟢",
         color: "#388e3c",
         bgColor: "#e8f5e9",
+        tone: "green",
         vitamins: ["A", "C", "K", "B qrup"],
         minerals: ["Dəmir", "Kalsium", "Maqnezium", "Kalium"],
         benefits: [
@@ -73,6 +77,7 @@ const products = [
         emoji: "⚪",
         color: "#757575",
         bgColor: "#f5f5f5",
+        tone: "white",
         vitamins: ["C", "K", "B6", "Folat"],
         minerals: ["Kalium", "Manqan", "Fosfor"],
         benefits: [
@@ -88,6 +93,7 @@ const products = [
         emoji: "🟡",
         color: "#fbc02d",
         bgColor: "#fffde7",
+        tone: "orange",
         vitamins: ["A", "C", "B6"],
         minerals: ["Kalium", "Maqnezium", "Manqan"],
         benefits: [
@@ -103,6 +109,7 @@ const products = [
         emoji: "🟠",
         color: "#e64a19",
         bgColor: "#ffebee",
+        tone: "orange",
         vitamins: ["A", "K", "C", "B kompleks"],
         minerals: ["Kalium", "Dəmir", "Mis"],
         benefits: [
@@ -118,6 +125,7 @@ const products = [
         emoji: "🟣",
         color: "#7b1fa2",
         bgColor: "#f3e5f5",
+        tone: "purple",
         vitamins: ["C", "K", "B6"],
         minerals: ["Kalium", "Manqan", "Antosianinlər"],
         benefits: [
@@ -133,6 +141,7 @@ const products = [
         emoji: "🟧",
         color: "#f57c00",
         bgColor: "#fff3e0",
+        tone: "orange",
         vitamins: ["A", "C", "E", "B2", "B6"],
         minerals: ["Kalium", "Mis", "Manqan"],
         benefits: [
@@ -145,7 +154,7 @@ const products = [
 ];
 
 // ============================================
-// DOM ELEMENTLƏRİ - HTML elementlərinə çıxış
+// DOM ELEMENTLƏRİ
 // ============================================
 const productsGrid = document.getElementById('productsGrid');
 const productModal = document.getElementById('productModal');
@@ -155,38 +164,79 @@ const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navMenu = document.getElementById('navMenu');
 const navbar = document.getElementById('navbar');
 const navLinks = document.querySelectorAll('.nav-link');
+const bottomNavLinks = document.querySelectorAll('.bottom-nav-link');
+const filterBar = document.getElementById('filterBar');
+
+let activeFilter = 'all';
+let touchStartY = 0;
+let touchEndY = 0;
+let isModalOpen = false;
 
 // ============================================
-// SAYT YÜKLƏNDİKDƏ İŞƏ DÜŞƏN FUNKSİYALAR
+// SAYT YÜKLƏNDİKDƏ
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     initializeWebsite();
+    setupTouchGestures();
+    setupParallax();
+    setupScrollProgress();
 });
 
 // ============================================
 // SAYTIN İNİTİALİZASİYASI
 // ============================================
 function initializeWebsite() {
-    renderProducts();           // Məhsulları göstər
-    setupSmoothScroll();        // Smooth scroll funksiyası
-    setupMobileMenu();          // Mobil menyu
-    setupNavbarScroll();        // Navbar scroll effekti
-    setupModal();               // Modal pəncərə
-    setupAnimations();          // Animasiyalar
+    renderProducts();
+    setupSmoothScroll();
+    setupMobileMenu();
+    setupNavbarScroll();
+    setupModal();
+    setupAnimations();
+    setupFilters();
+    setupBottomNavActive();
+    setupLazyLoading();
 }
 
 // ============================================
 // MƏHSULLARI RENDER ETMƏK
 // ============================================
-function renderProducts() {
-    if (!productsGrid) return;
+function renderProducts(filter = activeFilter) {
+    if (!productsGrid) {
+        console.error('Products grid not found');
+        return;
+    }
     
     productsGrid.innerHTML = '';
-    
-    products.forEach(product => {
+
+    const filtered = products.filter(product => {
+        if (filter === 'all') return true;
+        return product.tone === filter;
+    });
+
+    if (filtered.length === 0) {
+        productsGrid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem;">
+                <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 1rem;">
+                    Bu kateqoriyada məhsul tapılmadı.
+                </p>
+                <button class="filter-chip active" onclick="document.querySelector('[data-filter=\\'all\\']').click()">
+                    Hamısını göstər
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    filtered.forEach((product, index) => {
         const productCard = createProductCard(product);
+        productCard.style.animationDelay = `${index * 0.1}s`;
         productsGrid.appendChild(productCard);
     });
+    
+    // Animasiyaları yenidən aktivləşdir
+    setTimeout(() => {
+        setupAnimations();
+    }, 100);
 }
 
 // ============================================
@@ -213,7 +263,17 @@ function createProductCard(product) {
     
     // Karta klik edəndə modal aç
     const btn = card.querySelector('.product-btn');
-    btn.addEventListener('click', () => openProductModal(product));
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openProductModal(product);
+    });
+    
+    // Karta klik edəndə də modal aç (mobil üçün)
+    card.addEventListener('click', (e) => {
+        if (e.target !== btn && !btn.contains(e.target)) {
+            openProductModal(product);
+        }
+    });
     
     return card;
 }
@@ -224,8 +284,12 @@ function createProductCard(product) {
 function openProductModal(product) {
     if (!modalBody || !productModal) return;
     
+    isModalOpen = true;
+    document.body.style.overflow = 'hidden';
+    
     modalBody.innerHTML = `
         <div class="modal-product-header" style="background: linear-gradient(135deg, ${product.color}, ${product.bgColor});">
+            <div class="modal-handle"></div>
             <div class="modal-emoji">${product.emoji}</div>
             <h2 class="modal-product-name">${product.name}</h2>
         </div>
@@ -258,7 +322,11 @@ function openProductModal(product) {
     `;
     
     productModal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Scroll-u blokla
+    
+    // Haptic feedback (mobil üçün)
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
 }
 
 // ============================================
@@ -266,8 +334,14 @@ function openProductModal(product) {
 // ============================================
 function closeProductModal() {
     if (!productModal) return;
+    isModalOpen = false;
     productModal.classList.remove('active');
-    document.body.style.overflow = ''; // Scroll-u aktivləşdir
+    document.body.style.overflow = '';
+    
+    // Haptic feedback
+    if (navigator.vibrate) {
+        navigator.vibrate(30);
+    }
 }
 
 // ============================================
@@ -292,6 +366,39 @@ function setupModal() {
                 closeProductModal();
             }
         });
+        
+        // Modal content üçün swipe down gesture
+        const modalContent = productModal.querySelector('.modal-content');
+        if (modalContent) {
+            let startY = 0;
+            let currentY = 0;
+            let isDragging = false;
+            
+            modalContent.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+                isDragging = true;
+            });
+            
+            modalContent.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentY = e.touches[0].clientY;
+                const diff = currentY - startY;
+                
+                if (diff > 0) {
+                    modalContent.style.transform = `translateY(${diff}px)`;
+                }
+            });
+            
+            modalContent.addEventListener('touchend', () => {
+                if (currentY - startY > 100) {
+                    closeProductModal();
+                }
+                modalContent.style.transform = '';
+                isDragging = false;
+                startY = 0;
+                currentY = 0;
+            });
+        }
     }
 }
 
@@ -299,7 +406,9 @@ function setupModal() {
 // SMOOTH SCROLL FUNKSİYASI
 // ============================================
 function setupSmoothScroll() {
-    navLinks.forEach(link => {
+    const allLinks = [...navLinks, ...bottomNavLinks];
+
+    allLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -310,13 +419,20 @@ function setupSmoothScroll() {
                 // Mobil menyunu bağla
                 if (navMenu) {
                     navMenu.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
                 }
                 
                 // Smooth scroll
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                const offset = 80;
+                const targetPosition = targetSection.offsetTop - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
+                
+                // Bottom nav aktivliyini yenilə
+                updateBottomNavActive(targetId);
             }
         });
     });
@@ -328,13 +444,61 @@ function setupSmoothScroll() {
             e.preventDefault();
             const productsSection = document.querySelector('#products');
             if (productsSection) {
-                productsSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                const offset = 80;
+                const targetPosition = productsSection.offsetTop - offset;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
             }
         });
     }
+}
+
+// ============================================
+// FİLTR ÇİPLƏRİ
+// ============================================
+function setupFilters() {
+    if (!filterBar) {
+        console.warn('Filter bar not found');
+        return;
+    }
+
+    filterBar.addEventListener('click', function(e) {
+        const chip = e.target.closest('.filter-chip');
+        
+        if (!chip) return;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const selected = chip.dataset.filter || 'all';
+        activeFilter = selected;
+
+        // Aktiv vəziyyəti yenilə
+        const allChips = document.querySelectorAll('.filter-chip');
+        allChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        // Haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(20);
+        }
+
+        // Məhsulları yenidən göstər
+        renderProducts(activeFilter);
+        
+        // Scroll to products
+        const productsSection = document.querySelector('#products');
+        if (productsSection) {
+            const offset = 100;
+            const targetPosition = productsSection.offsetTop - offset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
 }
 
 // ============================================
@@ -346,6 +510,12 @@ function setupMobileMenu() {
     mobileMenuBtn.addEventListener('click', function() {
         navMenu.classList.toggle('active');
         mobileMenuBtn.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        
+        // Haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(30);
+        }
     });
     
     // Menyu linklərinə klik edəndə menyunu bağla
@@ -353,7 +523,17 @@ function setupMobileMenu() {
         link.addEventListener('click', function() {
             navMenu.classList.remove('active');
             mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
         });
+    });
+    
+    // Arxa plana klik edəndə bağla
+    navMenu.addEventListener('click', function(e) {
+        if (e.target === navMenu) {
+            navMenu.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
     });
 }
 
@@ -363,13 +543,19 @@ function setupMobileMenu() {
 function setupNavbarScroll() {
     if (!navbar) return;
     
+    let lastScroll = 0;
+    
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
+        const currentScroll = window.scrollY;
+        
+        if (currentScroll > 100) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-    });
+        
+        lastScroll = currentScroll;
+    }, { passive: true });
 }
 
 // ============================================
@@ -385,11 +571,210 @@ function setupAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
     
     // Animasiya üçün elementləri izlə
-    const animateElements = document.querySelectorAll('.product-card, .benefit-card, .step-card, .contact-card');
-    animateElements.forEach(el => observer.observe(el));
+    const animateElements = document.querySelectorAll('.product-card, .benefit-card, .step-card, .contact-card, .ingredient-item');
+    animateElements.forEach(el => {
+        if (!el.classList.contains('animate-in')) {
+            observer.observe(el);
+        }
+    });
 }
+
+// ============================================
+// BOTTOM NAV ACTIVE STATE
+// ============================================
+function setupBottomNavActive() {
+    updateBottomNavActive();
+    
+    window.addEventListener('scroll', () => {
+        updateBottomNavActive();
+    }, { passive: true });
+}
+
+function updateBottomNavActive(targetId = null) {
+    if (!targetId) {
+        const sections = ['#products', '#about', '#usage', '#contact'];
+        const scrollPosition = window.scrollY + 150;
+        
+        sections.forEach(sectionId => {
+            const section = document.querySelector(sectionId);
+            if (section) {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    targetId = sectionId;
+                }
+            }
+        });
+    }
+    
+    bottomNavLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === targetId) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// ============================================
+// TOUCH GESTURES
+// ============================================
+function setupTouchGestures() {
+    // Filter bar swipe
+    if (filterBar) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        filterBar.addEventListener('mousedown', (e) => {
+            isDown = true;
+            filterBar.style.cursor = 'grabbing';
+            startX = e.pageX - filterBar.offsetLeft;
+            scrollLeft = filterBar.scrollLeft;
+        });
+
+        filterBar.addEventListener('mouseleave', () => {
+            isDown = false;
+            filterBar.style.cursor = 'grab';
+        });
+
+        filterBar.addEventListener('mouseup', () => {
+            isDown = false;
+            filterBar.style.cursor = 'grab';
+        });
+
+        filterBar.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - filterBar.offsetLeft;
+            const walk = (x - startX) * 2;
+            filterBar.scrollLeft = scrollLeft - walk;
+        });
+    }
+}
+
+// ============================================
+// PARALLAX EFFECT
+// ============================================
+function setupParallax() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        if (scrolled < window.innerHeight) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    }, { passive: true });
+}
+
+// ============================================
+// SCROLL PROGRESS
+// ============================================
+function setupScrollProgress() {
+    // Optional: Add scroll progress indicator if needed
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        
+        // You can use this for a progress bar if needed
+        // document.documentElement.style.setProperty('--scroll-progress', `${scrolled}%`);
+    }, { passive: true });
+}
+
+// ============================================
+// LAZY LOADING
+// ============================================
+function setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        images.forEach(img => {
+            img.src = img.dataset.src;
+        });
+    }
+}
+
+// ============================================
+// PERFORMANCE OPTIMIZATION
+// ============================================
+// Throttle function for scroll events
+function throttle(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Debounce function for resize events
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Optimize scroll listeners
+const optimizedScrollHandler = throttle(() => {
+    setupNavbarScroll();
+    updateBottomNavActive();
+}, 100);
+
+window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
+
+// ============================================
+// PREVENT DOUBLE TAP ZOOM ON MOBILE
+// ============================================
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, false);
+
+// ============================================
+// ADD LOADING STATE
+// ============================================
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+    
+    // Remove any loading spinners if present
+    const loader = document.querySelector('.loader');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 300);
+    }
+});
