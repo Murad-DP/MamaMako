@@ -3,6 +3,14 @@
 // Enhanced JavaScript with Touch Gestures
 // ============================================
 
+// GitHub Pages base path detection
+const basePath = window.location.pathname.split('/').slice(0, -1).join('/') || '';
+const getImagePath = (relativePath) => {
+    // Remove leading slash if basePath exists
+    const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
+    return basePath ? `${basePath}/${cleanPath}` : `./${cleanPath}`;
+};
+
 // ============================================
 // MƏHSUL MƏLUMATLARI
 // ============================================
@@ -196,6 +204,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // SAYTIN İNİTİALİZASİYASI
 // ============================================
 function initializeWebsite() {
+    // Fix image paths for GitHub Pages
+    fixImagePaths();
     renderProducts();
     loadGalleryImages();
     setupSmoothScroll();
@@ -207,6 +217,18 @@ function initializeWebsite() {
     setupFilters();
     setupBottomNavActive();
     setupLazyLoading();
+}
+
+// ============================================
+// ŞƏKİL YOLLARINI DÜZƏLT (GitHub Pages üçün)
+// ============================================
+function fixImagePaths() {
+    // Logo şəkillərini düzəlt
+    const logoImages = document.querySelectorAll('img[src*="WhatsApp Image"]');
+    logoImages.forEach(img => {
+        const currentSrc = img.getAttribute('src');
+        img.src = getImagePath(currentSrc);
+    });
 }
 
 // ============================================
@@ -800,7 +822,7 @@ function loadGalleryImages() {
         'img/IMG-20251209-WA0023.jpg',
         'img/IMG-20251209-WA0024.jpg',
         'img/IMG-20251209-WA0026.jpg'
-    ];
+    ].map(path => getImagePath(path));
     
     galleryGrid.innerHTML = '';
     
