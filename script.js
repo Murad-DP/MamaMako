@@ -166,11 +166,21 @@ const navbar = document.getElementById('navbar');
 const navLinks = document.querySelectorAll('.nav-link');
 const bottomNavLinks = document.querySelectorAll('.bottom-nav-link');
 const filterBar = document.getElementById('filterBar');
+const galleryGrid = document.getElementById('galleryGrid');
+const imageModal = document.getElementById('imageModal');
+const imageModalImg = document.getElementById('imageModalImg');
+const imageModalClose = document.getElementById('imageModalClose');
+const imageModalPrev = document.getElementById('imageModalPrev');
+const imageModalNext = document.getElementById('imageModalNext');
+const imageModalCurrent = document.getElementById('imageModalCurrent');
+const imageModalTotal = document.getElementById('imageModalTotal');
 
 let activeFilter = 'all';
 let touchStartY = 0;
 let touchEndY = 0;
 let isModalOpen = false;
+let galleryImages = [];
+let currentImageIndex = 0;
 
 // ============================================
 // SAYT YÜKLƏNDİKDƏ
@@ -187,10 +197,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 function initializeWebsite() {
     renderProducts();
+    loadGalleryImages();
     setupSmoothScroll();
     setupMobileMenu();
     setupNavbarScroll();
     setupModal();
+    setupImageModal();
     setupAnimations();
     setupFilters();
     setupBottomNavActive();
@@ -577,7 +589,7 @@ function setupAnimations() {
     }, observerOptions);
     
     // Animasiya üçün elementləri izlə
-    const animateElements = document.querySelectorAll('.product-card, .benefit-card, .step-card, .contact-card, .ingredient-item');
+    const animateElements = document.querySelectorAll('.product-card, .benefit-card, .step-card, .contact-card, .ingredient-item, .gallery-item');
     animateElements.forEach(el => {
         if (!el.classList.contains('animate-in')) {
             observer.observe(el);
@@ -598,7 +610,7 @@ function setupBottomNavActive() {
 
 function updateBottomNavActive(targetId = null) {
     if (!targetId) {
-        const sections = ['#products', '#about', '#usage', '#contact'];
+        const sections = ['#products', '#gallery', '#usage', '#contact'];
         const scrollPosition = window.scrollY + 150;
         
         sections.forEach(sectionId => {
@@ -764,6 +776,266 @@ document.addEventListener('touchend', function (event) {
     }
     lastTouchEnd = now;
 }, false);
+
+// ============================================
+// GALLERY FUNCTIONS - Qalereya funksiyaları
+// ============================================
+function loadGalleryImages() {
+    if (!galleryGrid) return;
+    
+    // img qovluğundakı şəkillərin siyahısı
+    galleryImages = [
+        'img/IMG-20251208-WA0022.jpg',
+        'img/IMG-20251208-WA0024.jpg',
+        'img/IMG-20251209-WA0003.jpg',
+        'img/IMG-20251209-WA0004.jpg',
+        'img/IMG-20251209-WA0005.jpg',
+        'img/IMG-20251209-WA0006.jpg',
+        'img/IMG-20251209-WA0007.jpg',
+        'img/IMG-20251209-WA0008.jpg',
+        'img/IMG-20251209-WA0009.jpg',
+        'img/IMG-20251209-WA0019.jpg',
+        'img/IMG-20251209-WA0020.jpg',
+        'img/IMG-20251209-WA0021.jpg',
+        'img/IMG-20251209-WA0023.jpg',
+        'img/IMG-20251209-WA0024.jpg',
+        'img/IMG-20251209-WA0026.jpg'
+    ];
+    
+    galleryGrid.innerHTML = '';
+    
+    galleryImages.forEach((imageSrc, index) => {
+        const galleryItem = createGalleryItem(imageSrc, index);
+        galleryGrid.appendChild(galleryItem);
+    });
+    
+    // Total sayını güncəllə
+    if (imageModalTotal) {
+        imageModalTotal.textContent = galleryImages.length;
+    }
+    
+    // Animasiyaları yenidən aktivləşdir
+    setTimeout(() => {
+        setupAnimations();
+    }, 100);
+}
+
+function createGalleryItem(imageSrc, index) {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.style.animationDelay = `${index * 0.05}s`;
+    
+    item.innerHTML = `
+        <img src="${imageSrc}" alt="MAMA MAKO məhsul şəkli ${index + 1}" loading="lazy">
+        <div class="gallery-item-overlay">
+            <div class="gallery-item-overlay-icon">
+                <i class="fas fa-search-plus"></i>
+            </div>
+        </div>
+    `;
+    
+    // Şəkilə klik edəndə modal aç
+    item.addEventListener('click', () => {
+        openImageModal(index);
+    });
+    
+    // Touch eventləri (mobil üçün)
+    let touchStartTime = 0;
+    item.addEventListener('touchstart', (e) => {
+        touchStartTime = Date.now();
+    });
+    
+    item.addEventListener('touchend', (e) => {
+        const touchDuration = Date.now() - touchStartTime;
+        if (touchDuration < 300) {
+            e.preventDefault();
+            openImageModal(index);
+        }
+    });
+    
+    return item;
+}
+
+function openImageModal(index) {
+    if (!imageModal || !imageModalImg) return;
+    
+    currentImageIndex = index;
+    isModalOpen = true;
+    document.body.style.overflow = 'hidden';
+    
+    // Şəkli yüklə
+    imageModalImg.src = galleryImages[index];
+    imageModalImg.alt = `MAMA MAKO məhsul şəkli ${index + 1}`;
+    
+    // Counter güncəllə
+    if (imageModalCurrent) {
+        imageModalCurrent.textContent = index + 1;
+    }
+    
+    // Modal aç
+    imageModal.classList.add('active');
+    
+    // Haptic feedback (mobil üçün)
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+    
+    // Preload növbəti və əvvəlki şəkillər
+    preloadAdjacentImages(index);
+}
+
+function closeImageModal() {
+    if (!imageModal) return;
+    
+    isModalOpen = false;
+    imageModal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Haptic feedback
+    if (navigator.vibrate) {
+        navigator.vibrate(30);
+    }
+}
+
+function showNextImage() {
+    if (galleryImages.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+    updateImageModal();
+}
+
+function showPrevImage() {
+    if (galleryImages.length === 0) return;
+    currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    updateImageModal();
+}
+
+function updateImageModal() {
+    if (!imageModalImg || galleryImages.length === 0) return;
+    
+    // Fade out
+    imageModalImg.style.opacity = '0';
+    
+    setTimeout(() => {
+        imageModalImg.src = galleryImages[currentImageIndex];
+        imageModalImg.alt = `MAMA MAKO məhsul şəkli ${currentImageIndex + 1}`;
+        
+        if (imageModalCurrent) {
+            imageModalCurrent.textContent = currentImageIndex + 1;
+        }
+        
+        // Fade in
+        imageModalImg.style.opacity = '1';
+        
+        // Preload
+        preloadAdjacentImages(currentImageIndex);
+        
+        // Haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(20);
+        }
+    }, 150);
+}
+
+function preloadAdjacentImages(index) {
+    // Növbəti və əvvəlki şəkilləri preload et
+    const nextIndex = (index + 1) % galleryImages.length;
+    const prevIndex = (index - 1 + galleryImages.length) % galleryImages.length;
+    
+    const nextImg = new Image();
+    nextImg.src = galleryImages[nextIndex];
+    
+    const prevImg = new Image();
+    prevImg.src = galleryImages[prevIndex];
+}
+
+function setupImageModal() {
+    if (!imageModal) return;
+    
+    // Bağlama düyməsi
+    if (imageModalClose) {
+        imageModalClose.addEventListener('click', closeImageModal);
+    }
+    
+    // Növbəti düyməsi
+    if (imageModalNext) {
+        imageModalNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showNextImage();
+        });
+    }
+    
+    // Əvvəlki düyməsi
+    if (imageModalPrev) {
+        imageModalPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPrevImage();
+        });
+    }
+    
+    // Modal arxa planına klik edəndə bağla
+    imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal) {
+            closeImageModal();
+        }
+    });
+    
+    // ESC düyməsinə basanda bağla
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+            closeImageModal();
+        }
+        if (e.key === 'ArrowLeft' && imageModal.classList.contains('active')) {
+            showPrevImage();
+        }
+        if (e.key === 'ArrowRight' && imageModal.classList.contains('active')) {
+            showNextImage();
+        }
+    });
+    
+    // Mobil üçün swipe gesture
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    if (imageModalImg) {
+        imageModalImg.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        imageModalImg.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Yalnız üfüqi swipe olsa
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    // Sağa swipe - əvvəlki şəkil
+                    showPrevImage();
+                } else {
+                    // Sola swipe - növbəti şəkil
+                    showNextImage();
+                }
+            }
+            
+            // Aşağı swipe - modal bağla
+            if (deltaY > 100 && Math.abs(deltaX) < 50) {
+                closeImageModal();
+            }
+        }, { passive: true });
+    }
+    
+    // Şəkil yüklənmə xətası
+    if (imageModalImg) {
+        imageModalImg.addEventListener('error', function() {
+            this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em" font-family="sans-serif" font-size="18"%3EŞəkil yüklənmədi%3C/text%3E%3C/svg%3E';
+        });
+    }
+}
 
 // ============================================
 // ADD LOADING STATE

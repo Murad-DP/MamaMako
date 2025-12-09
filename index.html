@@ -57,6 +57,7 @@
                 <li><a href="#home" class="nav-link">Ana Səhifə</a></li>
                 <li><a href="#about" class="nav-link">Haqqımızda</a></li>
                 <li><a href="#products" class="nav-link">Məhsullar</a></li>
+                <li><a href="#gallery" class="nav-link">Qalereya</a></li>
                 <li><a href="#benefits" class="nav-link">Üstünlüklər</a></li>
                 <li><a href="#usage" class="nav-link">İstifadə</a></li>
                 <li><a href="#contact" class="nav-link">Əlaqə</a></li>
@@ -164,6 +165,40 @@
             </button>
             <div class="modal-body" id="modalBody">
                 <!-- Məhsul detalları buraya yüklənəcək -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         GALLERY SECTION - Məhsul Şəkilləri
+         ============================================ -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Məhsul Şəkilləri</h2>
+            <p class="section-subtitle">Təbii və dadlı əriştələrimizin görüntüləri</p>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Şəkillər JavaScript ilə dinamik yüklənəcək -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         IMAGE MODAL - Şəkil böyütmə
+         ============================================ -->
+    <div class="image-modal" id="imageModal">
+        <button class="image-modal-close" id="imageModalClose" aria-label="Bağla">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="image-modal-prev" id="imageModalPrev" aria-label="Əvvəlki">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="image-modal-next" id="imageModalNext" aria-label="Növbəti">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="image-modal-content">
+            <img id="imageModalImg" src="" alt="Məhsul şəkli">
+            <div class="image-modal-counter">
+                <span id="imageModalCurrent">1</span> / <span id="imageModalTotal">1</span>
             </div>
         </div>
     </div>
@@ -301,9 +336,9 @@
             <i class="fas fa-utensils"></i>
             <span>Məhsullar</span>
         </a>
-        <a href="#about" class="bottom-nav-link">
-            <i class="fas fa-info-circle"></i>
-            <span>Haqqımızda</span>
+        <a href="#gallery" class="bottom-nav-link">
+            <i class="fas fa-images"></i>
+            <span>Qalereya</span>
         </a>
         <a href="#usage" class="bottom-nav-link">
             <i class="fas fa-bowl-food"></i>
