@@ -17,7 +17,7 @@ const getImagePath = (relativePath) => {
 const products = [
     {
         id: 1,
-        name: "Brokolili Əriştə",
+        name: "Brokoli",
         emoji: "🟢",
         color: "#2d8659",
         bgColor: "#e8f5e9",
@@ -33,7 +33,7 @@ const products = [
     },
     {
         id: 2,
-        name: "Kök Əriştəsi",
+        name: "Kök",
         emoji: "🟠",
         color: "#ff6b35",
         bgColor: "#fff3e0",
@@ -49,7 +49,7 @@ const products = [
     },
     {
         id: 3,
-        name: "Çuğundur Əriştəsi",
+        name: "Çuğundur",
         emoji: "🟣",
         color: "#9c27b0",
         bgColor: "#f3e5f5",
@@ -65,7 +65,7 @@ const products = [
     },
     {
         id: 4,
-        name: "İspanaq Əriştəsi",
+        name: "İspanaq",
         emoji: "🟢",
         color: "#388e3c",
         bgColor: "#e8f5e9",
@@ -81,7 +81,7 @@ const products = [
     },
     {
         id: 5,
-        name: "Gül Kələmli Əriştə",
+        name: "Gül Kələm",
         emoji: "⚪",
         color: "#757575",
         bgColor: "#f5f5f5",
@@ -97,7 +97,7 @@ const products = [
     },
     {
         id: 6,
-        name: "Kababkili (Çuçqalı) Əriştə",
+        name: "Kabaçki",
         emoji: "🟡",
         color: "#fbc02d",
         bgColor: "#fffde7",
@@ -113,7 +113,7 @@ const products = [
     },
     {
         id: 7,
-        name: "Qırmızı Köklü Əriştə",
+        name: "Qırmızı Kök",
         emoji: "🟠",
         color: "#e64a19",
         bgColor: "#ffebee",
@@ -129,7 +129,7 @@ const products = [
     },
     {
         id: 8,
-        name: "Qırmızı Kələmli Əriştə",
+        name: "Qırmızı Kələm",
         emoji: "🟣",
         color: "#7b1fa2",
         bgColor: "#f3e5f5",
@@ -145,7 +145,7 @@ const products = [
     },
     {
         id: 9,
-        name: "Balqabaqlı Əriştə",
+        name: "Balqabaqlı",
         emoji: "🟧",
         color: "#f57c00",
         bgColor: "#fff3e0",
@@ -807,6 +807,8 @@ function loadGalleryImages() {
     
     // img qovluğundakı şəkillərin siyahısı
     galleryImages = [
+        'img/New1.jpeg',
+        'img/New2.jpeg',
         'img/IMG-20251208-WA0022.jpg',
         'img/IMG-20251208-WA0024.jpg',
         'img/IMG-20251209-WA0003.jpg',

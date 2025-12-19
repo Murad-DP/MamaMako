@@ -461,6 +461,87 @@ body::before {
     animation: fadeInUp 1s ease 0.2s both;
 }
 
+/* Brand Tagline - Logo Sloqanı */
+.brand-tagline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: var(--spacing-sm);
+    animation: fadeInUp 1s ease 0.3s both;
+    flex-wrap: wrap;
+}
+
+.tagline-text {
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 50%, #ffffff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+    text-shadow: none;
+    position: relative;
+}
+
+.tagline-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+    z-index: -1;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.tagline-divider {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { 
+        opacity: 1; 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+    50% { 
+        opacity: 0.7; 
+        text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.5);
+    }
+}
+
+/* Mobil tagline stilləri */
+@media (max-width: 768px) {
+    .brand-tagline {
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .tagline-divider {
+        display: none;
+    }
+    
+    .tagline-text {
+        font-size: clamp(1rem, 4.5vw, 1.3rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .tagline-text {
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        letter-spacing: 0.5px;
+    }
+}
+
 .hero-subtitle {
     font-size: clamp(1.3rem, 3.5vw, 1.8rem);
     margin-bottom: var(--spacing-xs);
