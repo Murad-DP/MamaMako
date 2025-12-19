@@ -1780,6 +1780,280 @@ section {
 }
 
 /* ============================================
+   STORAGE SECTION - Saxlama qaydası
+   ============================================ */
+.storage {
+    background: linear-gradient(180deg, #f8f9fa 0%, #fff5f0 50%, #f0faf9 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.storage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(78, 205, 196, 0.08) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.storage-info-box {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid rgba(255, 107, 53, 0.15);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.storage-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gradient-primary);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-sm);
+    box-shadow: var(--shadow-colored);
+}
+
+.storage-badge i {
+    font-size: 1.1rem;
+}
+
+.storage-intro {
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.storage-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.storage-step-card {
+    background: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    opacity: 0;
+    transform: translateY(30px);
+    border: 2px solid rgba(78, 205, 196, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.storage-step-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-normal);
+}
+
+.storage-step-card:hover::before {
+    transform: scaleX(1);
+}
+
+.storage-step-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: storageCardAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes storageCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.storage-step-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(78, 205, 196, 0.3);
+}
+
+.storage-step-icon {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+    transition: all var(--transition-normal);
+}
+
+.storage-step-card:hover .storage-step-icon {
+    transform: scale(1.1) rotate(360deg);
+    box-shadow: 0 12px 28px rgba(78, 205, 196, 0.4);
+}
+
+.storage-step-icon i {
+    font-size: 1.6rem;
+    color: var(--white);
+}
+
+.storage-step-content h3 {
+    font-size: clamp(1.1rem, 3vw, 1.25rem);
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.storage-step-content p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.storage-step-content strong {
+    color: var(--primary-color);
+}
+
+.storage-tip {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, rgba(78, 205, 196, 0.08) 100%);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    border: 2px dashed rgba(255, 107, 53, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.storage-tip-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    background: linear-gradient(135deg, #ffd93d 0%, #ff9500 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(255, 217, 61, 0.3);
+}
+
+.storage-tip-icon i {
+    font-size: 1.4rem;
+    color: var(--white);
+}
+
+.storage-tip p {
+    margin: 0;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Storage Section Mobile Responsive */
+@media (max-width: 768px) {
+    .storage-steps {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .storage-step-card {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+    }
+
+    .storage-step-icon {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+    }
+
+    .storage-step-icon i {
+        font-size: 1.3rem;
+    }
+
+    .storage-info-box {
+        padding: var(--spacing-sm);
+    }
+
+    .storage-badge {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+
+    .storage-tip {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-sm);
+    }
+
+    .storage-tip-icon {
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .storage-step-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .storage-step-icon {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .storage-intro {
+        font-size: 1rem;
+    }
+}
+
+/* Touch Device Optimizations for Storage */
+@media (hover: none) and (pointer: coarse) {
+    .storage-step-card:hover {
+        transform: none;
+    }
+    
+    .storage-step-card:active {
+        transform: scale(0.98);
+    }
+    
+    .storage-step-card:hover .storage-step-icon {
+        transform: none;
+    }
+}
+
+/* ============================================
    CONTACT SECTION
    ============================================ */
 .contact {

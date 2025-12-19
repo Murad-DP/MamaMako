@@ -611,7 +611,7 @@ function setupAnimations() {
     }, observerOptions);
     
     // Animasiya üçün elementləri izlə
-    const animateElements = document.querySelectorAll('.product-card, .benefit-card, .step-card, .contact-card, .ingredient-item, .gallery-item');
+    const animateElements = document.querySelectorAll('.product-card, .benefit-card, .step-card, .contact-card, .ingredient-item, .gallery-item, .storage-step-card');
     animateElements.forEach(el => {
         if (!el.classList.contains('animate-in')) {
             observer.observe(el);
