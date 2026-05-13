@@ -471,19 +471,22 @@ function setupSmoothScroll() {
         });
     });
     
-    // CTA düyməsi
+    // CTA düyməsi — href-dəki anchora scroll (məs. #gallery, #products)
     const ctaButton = document.querySelector('.cta-button');
     if (ctaButton) {
         ctaButton.addEventListener('click', function(e) {
             e.preventDefault();
-            const productsSection = document.querySelector('#products');
-            if (productsSection) {
+            const targetId = this.getAttribute('href');
+            if (!targetId || !targetId.startsWith('#')) return;
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
                 const offset = 88;
-                const targetPosition = productsSection.offsetTop - offset;
+                const targetPosition = targetSection.offsetTop - offset;
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
                 });
+                updateBottomNavActive(targetId);
             }
         });
     }
