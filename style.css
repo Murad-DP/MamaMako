@@ -1420,10 +1420,6 @@ section {
     pointer-events: none;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1);
-}
-
 .gallery-item-overlay {
     position: absolute;
     bottom: 0;
@@ -1434,10 +1430,6 @@ section {
     transform: translateY(100%);
     transition: transform var(--transition-normal);
     z-index: 2;
-}
-
-.gallery-item:hover .gallery-item-overlay {
-    transform: translateY(0);
 }
 
 .gallery-item-overlay-icon {
@@ -1455,9 +1447,20 @@ section {
     transition: all var(--transition-normal);
 }
 
-.gallery-item:hover .gallery-item-overlay-icon {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1) rotate(360deg);
+/* Yalnız siçan/trackpad ilə real hover olan ekranlarda overlay (mobil toxunuşda şəkil təmiz qalsın) */
+@media (hover: hover) and (pointer: fine) {
+    .gallery-item:hover .gallery-item-overlay {
+        transform: translateY(0);
+    }
+
+    .gallery-item:hover .gallery-item-overlay-icon {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1) rotate(360deg);
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
 }
 
 /* Image Modal - Lightbox */
@@ -1669,14 +1672,16 @@ section {
         transform: scale(0.95);
     }
     
+    /* Böyütmə ikonu və gradient overlay mobilde gizli — şəkil tam görünsün; toxunuşla modal açılır */
     .gallery-item-overlay {
-        transform: translateY(0);
-        opacity: 0.7;
+        transform: translateY(100%);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
-    
-    .gallery-item:hover .gallery-item-overlay {
-        transform: translateY(0);
-        opacity: 0.9;
+
+    .gallery-item:hover::before {
+        opacity: 0;
     }
     
     .gallery-item img {
