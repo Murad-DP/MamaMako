@@ -56,7 +56,9 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link">Ana Səhifə</a></li>
                 <li><a href="#about" class="nav-link">Haqqımızda</a></li>
+                <!-- Müvəqqəti: Məhsullar bölməsi söndürülüb
                 <li><a href="#products" class="nav-link">Məhsullar</a></li>
+                -->
                 <li><a href="#gallery" class="nav-link">Qalereya</a></li>
                 <li><a href="#benefits" class="nav-link">Üstünlüklər</a></li>
                 <li><a href="#usage" class="nav-link">İstifadə</a></li>
@@ -82,8 +84,8 @@
             </div>
             <p class="hero-subtitle">Təbii tərəvəzli xəmir məhsulları</p>
             <p class="hero-description">🌿 Təbiətin rəngini mətbəxinizə gətirdik!</p>
-            <a href="#products" class="cta-button">
-                <span>Məhsulları kəşf et</span>
+            <a href="#gallery" class="cta-button">
+                <span>Qalereyaya bax</span>
                 <i class="fas fa-arrow-down"></i>
             </a>
         </div>
@@ -138,14 +140,13 @@
     </section>
 
     <!-- ============================================
-         PRODUCTS SECTION - Məhsullar
-         ============================================ -->
+         PRODUCTS SECTION - Məhsullar (müvəqqəti söndürülüb)
+         ============================================
     <section id="products" class="products">
         <div class="container">
             <h2 class="section-title">Məhsullarımız</h2>
             <p class="section-subtitle">Sezona uyğun tərəvəzlərdən hazırlanan məhsullar</p>
             
-            <!-- Filtrlər (mobil restoran menyusu təcrübəsi üçün) -->
             <div class="filter-bar" id="filterBar">
                 <button class="filter-chip active" data-filter="all">Hamısı</button>
                 <button class="filter-chip" data-filter="green">Yaşıl</button>
@@ -154,12 +155,11 @@
                 <button class="filter-chip" data-filter="white">Ağ</button>
             </div>
             
-            <!-- Məhsul kartları grid -->
             <div class="products-grid" id="productsGrid">
-                <!-- Məhsul kartları JavaScript ilə dinamik yüklənəcək -->
             </div>
         </div>
     </section>
+    ============================================ -->
 
     <!-- ============================================
          PRODUCT MODAL - Məhsul detalları popup
@@ -405,9 +405,9 @@
 
     <!-- Mobil sabit naviqasiya (restoran menyusu hissi üçün) -->
     <nav class="bottom-nav">
-        <a href="#products" class="bottom-nav-link">
-            <i class="fas fa-utensils"></i>
-            <span>Məhsullar</span>
+        <a href="#about" class="bottom-nav-link">
+            <i class="fas fa-circle-info"></i>
+            <span>Haqqımızda</span>
         </a>
         <a href="#gallery" class="bottom-nav-link">
             <i class="fas fa-images"></i>

@@ -629,7 +629,7 @@ function setupBottomNavActive() {
 
 function updateBottomNavActive(targetId = null) {
     if (!targetId) {
-        const sections = ['#products', '#gallery', '#usage', '#contact'];
+        const sections = ['#about', '#gallery', '#usage', '#contact'];
         const scrollPosition = window.scrollY + 150;
         
         sections.forEach(sectionId => {
