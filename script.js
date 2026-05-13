@@ -450,14 +450,14 @@ function setupSmoothScroll() {
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                // Mobil menyunu bağla
+                // Mobil üçün navbar + təxmini boşluq
                 if (navMenu) {
                     navMenu.classList.remove('active');
                     mobileMenuBtn.classList.remove('active');
                 }
                 
                 // Smooth scroll
-                const offset = 80;
+                const offset = 88;
                 const targetPosition = targetSection.offsetTop - offset;
                 
                 window.scrollTo({
@@ -478,7 +478,7 @@ function setupSmoothScroll() {
             e.preventDefault();
             const productsSection = document.querySelector('#products');
             if (productsSection) {
-                const offset = 80;
+                const offset = 88;
                 const targetPosition = productsSection.offsetTop - offset;
                 window.scrollTo({
                     top: targetPosition,
@@ -624,10 +624,7 @@ function setupAnimations() {
 // ============================================
 function setupBottomNavActive() {
     updateBottomNavActive();
-    
-    window.addEventListener('scroll', () => {
-        updateBottomNavActive();
-    }, { passive: true });
+    // Scroll zamanı yeniləmə optimizedScrollHandler (throttle) ilə edilir
 }
 
 function updateBottomNavActive(targetId = null) {
@@ -779,9 +776,8 @@ function debounce(func, wait) {
     };
 }
 
-// Optimize scroll listeners
+// Throttled bottom-nav yeniləməsi (navbar üçün ayrıca listener setupNavbarScroll-da)
 const optimizedScrollHandler = throttle(() => {
-    setupNavbarScroll();
     updateBottomNavActive();
 }, 100);
 
@@ -850,7 +846,7 @@ function createGalleryItem(imageSrc, index) {
     item.style.animationDelay = `${index * 0.05}s`;
     
     item.innerHTML = `
-        <img src="${imageSrc}" alt="MAMA MAKO məhsul şəkli ${index + 1}" loading="lazy">
+        <img src="${imageSrc}" alt="MAMA MAKO məhsul şəkli ${index + 1}" loading="lazy" draggable="false">
         <div class="gallery-item-overlay">
             <div class="gallery-item-overlay-icon">
                 <i class="fas fa-search-plus"></i>
@@ -858,23 +854,53 @@ function createGalleryItem(imageSrc, index) {
         </div>
     `;
     
-    // Şəkilə klik edəndə modal aç
-    item.addEventListener('click', () => {
-        openImageModal(index);
-    });
-    
-    // Touch eventləri (mobil üçün)
+    // Sürüşmə ilə toxunuşu ayır: yalnız demək olar ki, hərəkətsiz "tap" modal açsın
+    const MOVE_THRESHOLD_PX = 14;
+    const TAP_MAX_MS = 550;
+    let touchStartX = 0;
+    let touchStartY = 0;
     let touchStartTime = 0;
+    let touchMoved = false;
+    let suppressNextClick = false;
+
     item.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
         touchStartTime = Date.now();
-    });
-    
-    item.addEventListener('touchend', (e) => {
-        const touchDuration = Date.now() - touchStartTime;
-        if (touchDuration < 300) {
-            e.preventDefault();
-            openImageModal(index);
+        touchMoved = false;
+    }, { passive: true });
+
+    item.addEventListener('touchmove', (e) => {
+        if (touchMoved || !e.touches.length) return;
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+        if (dx > MOVE_THRESHOLD_PX || dy > MOVE_THRESHOLD_PX) {
+            touchMoved = true;
         }
+    }, { passive: true });
+
+    item.addEventListener('touchend', () => {
+        if (touchMoved) {
+            suppressNextClick = true;
+            return;
+        }
+        if (Date.now() - touchStartTime > TAP_MAX_MS) {
+            suppressNextClick = true;
+            return;
+        }
+        suppressNextClick = true;
+        openImageModal(index);
+    }, { passive: true });
+
+    item.addEventListener('click', (e) => {
+        if (suppressNextClick) {
+            e.preventDefault();
+            e.stopPropagation();
+            suppressNextClick = false;
+            return;
+        }
+        openImageModal(index);
     });
     
     return item;

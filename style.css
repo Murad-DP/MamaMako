@@ -85,6 +85,9 @@ html {
     -ms-text-size-adjust: 100%;
     height: 100%;
     overflow-x: hidden;
+    /* Sabit navbar + alt nav üstündə qalmamaq üçün */
+    scroll-padding-top: calc(72px + env(safe-area-inset-top));
+    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom));
 }
 
 body {
@@ -1357,6 +1360,10 @@ section {
     box-shadow: var(--shadow-md);
     border: 2px solid rgba(255, 107, 53, 0.05);
     background: var(--light-color);
+    /* Şaquli sürüşməyə üstünlük — şəkil üzərində scroll zamanı təsadüfi açılmanı azaldır */
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .gallery-item.animate-in {
@@ -2588,13 +2595,24 @@ section {
         overflow-x: hidden;
     }
 
-    .products-grid,
+    /* Məhsul kartları mobilde tam eni saxlayır (2 sütun daralır) */
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        width: 100%;
+    }
+
     .benefits-grid,
-    .usage-steps,
     .contact-grid,
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-xs);
+        width: 100%;
+    }
+
+    .usage-steps {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
         width: 100%;
     }
     
